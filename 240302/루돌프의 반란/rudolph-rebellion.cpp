@@ -96,7 +96,7 @@ void rMove(int r, int c) {
         int curr_c = q.front().second;
         q.pop();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
             int next_r = curr_r + dyR[i];
             int next_c = curr_c + dxR[i];
 
@@ -285,7 +285,6 @@ int main() {
             }
         }
         if (checkEnd()) break;
-
     }
 
     for (int i = 1; i <= P; i++) {
