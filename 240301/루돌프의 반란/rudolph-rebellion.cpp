@@ -221,6 +221,7 @@ void sMove(int r, int c, int sNum) {
         score[sNum] += D;
         if (r + calR + (-calR * D) <= 0 || r + calR + (-calR * D) > N || c + calC + (-calC * D) <= 0 || c + calC + (-calC * D) > N) {
             v[map[r][c]].alive = false;
+            map[r][c] = 0;
         }
         else if (map[r + calR + (-calR * D)][c + calC + (-calC * D)] > 0 && map[r + calR + (-calR * D)][c + calC + (-calC * D)] != sNum) {
             interaction(r + calR + (-calR * D), c + calC + (-calC * D), -calR, -calC, map[r + calR + (-calR * D)][c + calC + (-calC * D)]);
@@ -231,11 +232,11 @@ void sMove(int r, int c, int sNum) {
         }
 
         else {
+            map[r][c] = 0;
             v[sNum].r = r + calR + (-calR * D);
             v[sNum].c = c + calC + (-calC * D);
             map[r + calR + (-calR * D)][c + calC + (-calC * D)] = sNum;
         }
-        map[r][c] = 0;
     }
 
     else if (map[r + calR][c + calC] == 0) {
