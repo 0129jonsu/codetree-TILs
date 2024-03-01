@@ -87,43 +87,46 @@ void rMove(int r, int c) {
     initVisited();
     int calC = 0;
     int calR = 0;
-    while (!q.empty()) q.pop();
-    q.push({ r, c });
-    visited[r][c] = true;
+    int minL = 2501;
+    int tmpS;
 
-    while (!q.empty()) {
-        int curr_r = q.front().first;
-        int curr_c = q.front().second;
-        q.pop();
-
-        for (int i = 0; i < 4; i++) {
-            int next_r = curr_r + dyR[i];
-            int next_c = curr_c + dxR[i];
-
-            if (map[next_r][next_c] > 0) {
-                int minL = (r - next_r) * (r - next_r) + (c - next_c) * (c - next_c);
-
-                for (int w = 0; w < 8; w++) {
-                    int tmpR = r + dyR[w];
-                    int tmpC = c + dxR[w];
-                    int tmpL = (next_r - tmpR) * (next_r - tmpR) + (next_c - tmpC) * (next_c - tmpC);
-                    if (tmpR <= 0 || tmpR > N || tmpC <= 0 || tmpC > N) continue;
-                    if (minL > tmpL && map[tmpR][tmpC] >= 0) {
-                        calR = dyR[w];
-                        calC = dxR[w];
-                        minL = tmpL;
-                    }
-                }
-                while (!q.empty()) q.pop();
-                break;
-            }
-            if (next_r > N || next_r <= 0 || next_c > N || next_c <= 0) continue;
-            if (!visited[next_r][next_c] && map[next_r][next_c] == 0) {
-                q.push({ next_r, next_c });
-                visited[next_r][next_c] = true;
-            }
+    for (int i = 1; i <= P; i++) {
+        if (!v[i].alive) continue;
+        
+        int tmpR = v[i].r;
+        int tmpC = v[i].c;
+        int tmpL = pow((r-tmpR),2) + pow((c-tmpC),2);
+        if (minL > tmpL) {
+            tmpS = map[tmpR][tmpC];
+            minL = tmpL;
+            calR = tmpR;
+            calC = tmpC;
+        }
+        else if ((minL == tmpL) && (tmpR > calR)) {
+            tmpS = map[tmpR][tmpC];
+            minL = tmpL;
+            calR = tmpR;
+            calC = tmpC;
+        }
+        else if ((minL == tmpL) && (tmpR == calR) && (tmpC > calC)) {
+            tmpS = map[tmpR][tmpC];
+            minL = tmpL;
+            calR = tmpR;
+            calC = tmpC;
         }
     }
+    minL = 2501;
+    for (int i = 0; i < 8; i++) {
+        int tmpR = r + dyR[i];
+        int tmpC = c + dxR[i];
+        int tmpL = pow((v[tmpS].r - tmpR), 2) + pow((v[tmpS].c - tmpC), 2);
+        if (minL > tmpL) {
+            minL = tmpL;
+            calR = dyR[i];
+            calC = dxR[i];
+        }
+    }
+    
     if (map[r + calR][c + calC] > 0) {
         v[map[r + calR][c + calC]].stun = 1;
         score[v[map[r + calR][c + calC]].num] += C;
