@@ -1,12 +1,14 @@
 #include <iostream>
 #include <bitset>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
 string str;
 string a = "";
 string b = "";
+double cnt = 0;
 bool checkDot = false;
 
 int main() {
@@ -19,6 +21,7 @@ int main() {
         }
         if (!checkDot)a += str[i];
         else {
+            cnt++;
             b += str[i];
         }
     }
@@ -30,10 +33,8 @@ int main() {
     string bit_2 = "";
 
     double bi = stod(b);
-    while(bi > 1){
-        bi/=10;
-    }
-
+    bi /= pow(10,cnt);
+    
     for(int i = 0; i < 4; i++){
         bi *= 2;
         if(bi > 1){
