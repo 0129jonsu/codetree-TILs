@@ -2,24 +2,23 @@
 
 using namespace std;
 
-int n;
-
 void f1(int cnt){
+    if(cnt == 0) return;
+    f1(cnt - 1);
     cout << cnt << " ";
-    if(cnt == n) return;
-    f1(cnt + 1);
 }
 
 void f2(int cnt){
+    if(cnt == 0) return;
     cout << cnt << " ";
-    if(cnt == 1) return;
     f2(cnt - 1);
 }
 
 int main() {
+    int n;
     cin >> n;
 
-    f1(1);
+    f1(n);
     cout << "\n";
     f2(n);
 
