@@ -23,7 +23,7 @@ int main() {
         }
         d1++;
     }
-
+    if (months[idx] == mon) ans++;
     cout << ans;
     return 0;
 }
